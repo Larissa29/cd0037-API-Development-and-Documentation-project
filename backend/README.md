@@ -136,6 +136,83 @@ You will need to provide detailed documentation of your API endpoints including 
 ```
 
 
+`POST '/api/v1.0/questions/create'`
+
+- Creates a new question object
+- Request Arguments: None
+- Returns: An object with keys, `created` which is the id of the newly created question, `total_questions` and `questions`, that contains a list of objects of `id: question_id, question: question_string, answer: answer_string, category: category_string, difficulty: difficulty_int`.
+
+```json
+{
+  "created": 222,
+  "questions":[
+    {"id": 1,
+     "question": "How does this work?",
+     "answer": "No idea.",
+     "category": "Art",
+     "difficulty":2
+    }],
+  "total_questions": 10
+}
+```
+
+`POST '/api/v1.0/questions/search'`
+
+- Searches for a question and returns the search restuls
+- Request Arguments: None
+- Returns: An object with keys, `total_questions` and `questions`, that contains a list of objects of `id: question_id, question: question_string, answer: answer_string, category: category_string, difficulty: difficulty_int`.
+
+```json
+{
+  "questions":[
+    {"id": 1,
+     "question": "How does this work?",
+     "answer": "No idea.",
+     "category": "Art",
+     "difficulty":2
+    }],
+  "total_questions": 10
+}
+```
+
+`GET '/api/v1.0/categories/<category_id>/questions'`
+
+- Fetches all questions for a given category
+- Request Arguments: category_id
+- Returns: An object with keys, `current_category`, `total_questions` and `questions`, that contains a list of objects of `id: question_id, question: question_string, answer: answer_string, category: category_string, difficulty: difficulty_int`.
+
+```json
+{
+  "questions":[
+    {"id": 1,
+     "question": "How does this work?",
+     "answer": "No idea.",
+     "category": "Art",
+     "difficulty":2
+    }],
+  "total_questions": 10,
+  "current_category": "Art"
+}
+```
+
+`POST '/api/v1.0/quizzes'`
+
+- Fetches questions for a quizz
+- Request Arguments: category_id
+- Returns: An object with key, `question`, that contains the next question to be answered `id: question_id, question: question_string, answer: answer_string, category: category_string, difficulty: difficulty_int`.
+
+```json
+{
+  "questions":
+    {"id": 1,
+     "question": "How does this work?",
+     "answer": "No idea.",
+     "category": "Art",
+     "difficulty":2
+    }
+}
+```
+
 ## Testing
 
 Write at least one test for the success and at least one error behavior of each endpoint using the unittest library.

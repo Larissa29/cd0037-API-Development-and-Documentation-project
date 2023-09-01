@@ -151,12 +151,11 @@ def create_app(db_URI='', test_config=None):
             previous_questions = body.get('previous_questions')
             quiz_category = body.get('quiz_category')
 
-            if quiz_category['id'] == 0 and quiz_category['type'] != 'science':
+            if quiz_category['id'] == 0:
                 questions = Question.query.filter(Question.id.notin_(previous_questions)).all()
             else:
                 category_id = int(quiz_category['id']) + 1
                 questions = Question.query.filter(Question.category == category_id, Question.id.notin_(previous_questions)).all()
-                t = Question.query.filter(Question.category == category_id).all()
 
             return jsonify({
                 'success': True,
