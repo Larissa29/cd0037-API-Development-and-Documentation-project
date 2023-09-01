@@ -75,20 +75,66 @@ You will need to provide detailed documentation of your API endpoints including 
 
 `GET '/api/v1.0/categories'`
 
-- Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
+- Fetches a list of category objects with the id and the type of a category
 - Request Arguments: None
-- Returns: An object with a single key, `categories`, that contains an object of `id: category_string` key: value pairs.
+- Returns: An object with a single key, `categories`, that contains alist of objects of `id: category_id, type: category_string`.
 
 ```json
 {
-  "1": "Science",
-  "2": "Art",
-  "3": "Geography",
-  "4": "History",
-  "5": "Entertainment",
-  "6": "Sports"
+  "categories": [
+    {
+      "id": 1,
+      "type": "Art"
+    },
+    {
+      "id": 2,
+      "type": "Geography"
+    }
+  ]
 }
 ```
+
+`GET '/api/v1.0/questions'`
+
+- Fetches a list of question objects with the id, question, answer, category and difficulty of a question
+- Request Arguments: None
+- Returns: An object with keys,`total_questions`, `categories` and `questions`, that contains a list of objects of `id: question_id, question: question_string, answer: answer_string, category: category_string, difficulty: difficulty_int`.
+
+```json
+{
+  "questions":[
+    {"id": 1,
+     "question": "How does this work?",
+     "answer": "No idea.",
+     "category": "Art",
+     "difficulty":2
+    }],
+  "total_questions": 10,
+  "categories": [{"id": 1, "type": "Art"}]
+}
+```
+
+`DELETE '/api/v1.0/questions/<question_id>'`
+
+- Deletes a question objects with the specified id
+- Request Arguments: question_id
+- Returns: An object with keys, `deleted` which contains the id of the deleted question, `total_questions`, `categories` and `questions`, that contains a list of objects of `id: question_id, question: question_string, answer: answer_string, category: category_string, difficulty: difficulty_int`.
+
+```json
+{
+  "deleted": 2,
+  "questions":[
+    {"id": 1,
+     "question": "How does this work?",
+     "answer": "No idea.",
+     "category": "Art",
+     "difficulty":2
+    }],
+  "total_questions": 10,
+  "categories": [{"id": 1, "type": "Art"}]
+}
+```
+
 
 ## Testing
 
