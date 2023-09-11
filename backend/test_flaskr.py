@@ -28,6 +28,14 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(data['categories'])
 
+    def test_400_get_all_categories(self):
+        res = self.client().get('/categories/9999')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'resource not found')
+
     def test_paginated_questions(self):
         res = self.client().get('/questions')
         data = json.loads(res.data)
@@ -81,6 +89,14 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(data['questions'])
         self.assertTrue(data['created'])
 
+    def test_422_create_question(self):
+        response = self.client().post('/questions/create', json={})
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 422)
+        self.assertEqual(data['success'], False)
+
+
     def test_search_question(self):
         res = self.client().post('/questions/search', json={'searchTerm': 'What'})
         data = json.loads(res.data)
@@ -131,6 +147,14 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['question'])
+
+    def test_422_get_quiz(self):
+        response = self.client().post('/quizzes', json={})
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 422)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'unprocessable')
 
 
 # Make the tests conveniently executable

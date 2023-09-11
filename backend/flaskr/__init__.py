@@ -92,8 +92,15 @@ def create_app(db_URI='', test_config=None):
 
         question= body.get('question', None)
         answer = body.get('answer', None)
-        category = body.get('category', None)
+        category = int(body.get('category', None))
         difficulty = body.get('difficulty', None)
+
+        if not ('question' in body and 'answer' in body and
+                'difficulty' in body and 'category' in body):
+            abort(422)
+
+        if not category == 1:
+            category += 1
 
         try:
             new_question = Question(question=question, answer=answer, category=category, difficulty=difficulty)
@@ -150,6 +157,9 @@ def create_app(db_URI='', test_config=None):
             body = request.get_json()
             previous_questions = body.get('previous_questions')
             quiz_category = body.get('quiz_category')
+
+            if not quiz_category:
+                abort(422)
 
             if quiz_category['id'] == 0:
                 questions = Question.query.filter(Question.id.notin_(previous_questions)).all()
