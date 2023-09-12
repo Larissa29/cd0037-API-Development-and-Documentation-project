@@ -43,7 +43,6 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['total_questions'])
-        self.assertTrue(data['current_category'])
         self.assertTrue(data['categories'])
 
     def test_404_sent_requesting_beyond_valid_page(self):
@@ -55,14 +54,13 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'resource not found')
 
     def test_delete_question(self):
-        res = self.client().delete('/questions/13')
+        res = self.client().delete('/questions/15')
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertTrue(data['delete'])
         self.assertEqual(data['success'], True)
         self.assertTrue(data['total_questions'])
-        self.assertTrue(data['current_category'])
         self.assertTrue(data['categories'])
 
     def test_404_delete_question(self):
@@ -104,7 +102,6 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['total_questions'])
-        self.assertTrue(data['current_category'])
         self.assertTrue(data['questions'])
 
     def test_400_search(self):

@@ -90,14 +90,15 @@ def create_app(db_URI='', test_config=None):
     def create_question():
         body = request.get_json()
 
-        question= body.get('question', None)
-        answer = body.get('answer', None)
-        category = int(body.get('category', None))
-        difficulty = body.get('difficulty', None)
 
         if not ('question' in body and 'answer' in body and
                 'difficulty' in body and 'category' in body):
             abort(422)
+
+        question = body.get('question', None)
+        answer = body.get('answer', None)
+        category = int(body.get('category', None))
+        difficulty = body.get('difficulty', None)
 
         if not category == 1:
             category += 1
